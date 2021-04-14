@@ -1,0 +1,180 @@
+{
+  "QmcUQy2PRq6USbB164s9GCsgNYPxwJPE7KjfVffgbHvM1P": {
+    "recv": 1394543287,
+    "sent": 0,
+    "exchanged": 48886,
+    "latency": 151,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      }
+    ],
+    "IP": "71.105.96.95",
+    "continent": "North America",
+    "country": "United States",
+    "region": "New York",
+    "city": "Kensington"
+  },
+  "Qmcc7vYRdWxfpDHSRLW27kMsuPsBUthdjxk4qyfFup8YMR": {
+    "recv": 226351835,
+    "sent": 0,
+    "exchanged": 9786,
+    "latency": 191,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      }
+    ],
+    "IP": "62.138.18.240",
+    "continent": "Europe",
+    "country": "Germany",
+    "region": "North Rhine-Westphalia",
+    "city": "Köln"
+  },
+  "QmUEMvxS2e7iDrereVYc5SWPauXPyNwxcy9BXZrC1QTcHE": {
+    "recv": 40640579,
+    "sent": 0,
+    "exchanged": 3648,
+    "latency": 62,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "94.130.135.167",
+    "continent": "Europe",
+    "country": "Germany",
+    "region": "Berlin",
+    "city": "Berlin"
+  },
+  "12D3KooWJvs7yRR6gvT8CTcGAv8KciRygtwd6dUAxxb2MxSVE1Sw": {
+    "recv": 408730,
+    "sent": 0,
+    "exchanged": 695,
+    "latency": 120,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      }
+    ],
+    "IP": "159.224.177.218",
+    "continent": "Europe",
+    "country": "Ukraine",
+    "region": "Kyiv City",
+    "city": "Kyiv"
+  },
+  "QmdZWGjWCWGREgaKqM1AMt99whSHrPS4bJU15oB1XRqFT1": {
+    "recv": 77024444,
+    "sent": 0,
+    "exchanged": 4598,
+    "latency": 56,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "185.21.216.196",
+    "continent": "Europe",
+    "country": "United Kingdom",
+    "region": "England",
+    "city": "City of Westminster"
+  },
+  "QmdsD3BziZfTcBeqgAUjoMbPHtBCUFQo534RpMALzgEkMR": {
+    "recv": 8066291,
+    "sent": 0,
+    "exchanged": 186,
+    "latency": 297,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      }
+    ],
+    "IP": "36.14.5.168",
+    "continent": "Asia",
+    "country": "Japan",
+    "region": "Tokyo",
+    "city": "Tokyo"
+  },
+  "QmQv7iVQTfnUEmEYGVu93q6pArMvkw1MTR9DZ88TFeudWU": {
+    "recv": 4896,
+    "sent": 0,
+    "exchanged": 1,
+    "latency": 102,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.1.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "193.110.3.206",
+    "continent": "Asia",
+    "country": "Russia",
+    "region": "Moscow Oblast",
+    "city": "Skhodnya"
+  },
+  "QmTSQa6WrvDCxo8K7BGC1DXExJGFARbtAPE2XFam4hHY6b": {
+    "recv": 1848807,
+    "sent": 0,
+    "exchanged": 232,
+    "latency": 522,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "73.243.2.10",
+    "continent": "North America",
+    "country": "United States",
+    "region": "Colorado",
+    "city": "Wheat Ridge"
+  },
+  "12D3KooWBqQrnTqx9Wp89p2bD1hrwmXYJQ5x1fDfigRCfZJGKQfr": {
+    "recv": 9071859,
+    "sent": 0,
+    "exchanged": 2790,
+    "latency": 83,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "luflosi.de",
+    "continent": "Europe",
+    "country": "Germany",
+    "region": "Saarland",
+    "city": "Saarbrücken"
+  },
+  "12D3KooWQcs8ukanhWjHuxJJR1RkPeP8kunUpe7868dLygsh1uzK": {
+    "recv": 22585070,
+    "sent": 0,
+    "exchanged": 2656,
+    "latency": 71,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "155.4.90.206",
+    "continent": "Europe",
+    "country": "Sweden",
+    "region": "Stockholm",
+    "city": "Sollentuna"
+  }
+}
