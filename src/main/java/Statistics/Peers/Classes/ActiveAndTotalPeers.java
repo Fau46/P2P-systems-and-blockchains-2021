@@ -1,15 +1,13 @@
-package Statistics.Peer;
+package Statistics.Peers.Classes;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 
-public class PeersListSize {
+public class ActiveAndTotalPeers {
+    private String time;
     private int totalPeers;
     private int activePeers;
-    private String time;
 
-    public PeersListSize(int totalPeers, int activePeers){
+    public ActiveAndTotalPeers(int totalPeers, int activePeers){
         this.totalPeers = totalPeers;
         this.activePeers = activePeers;
         this.time = LocalDateTime.now().toString();

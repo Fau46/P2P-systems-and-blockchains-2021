@@ -1,7 +1,6 @@
 package Aux_Classes;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 public class StreamFileWriter {
     private DataOutputStream dataOutputStream;

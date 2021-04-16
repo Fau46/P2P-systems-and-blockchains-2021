@@ -1,4 +1,4 @@
-package Statistics.Peer;
+package Statistics.Peers.Classes;
 
 import com.google.gson.JsonArray;
 
@@ -31,17 +31,5 @@ public class Peer {
         this.recv = this.recv != recv ? recv : this.recv;
         this.sent = this.sent != recv ? sent : this.sent;
         this.exchanged = this.exchanged != exchanged ? exchanged : this.exchanged;
-    }
-
-    public long getExchanged() {
-        return exchanged;
-    }
-
-    public long getRecv() {
-        return recv;
-    }
-
-    public long getSent() {
-        return sent;
     }
 }

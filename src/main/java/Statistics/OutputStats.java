@@ -5,6 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class OutputStats implements Runnable,TaskInterface{
@@ -13,6 +15,8 @@ public class OutputStats implements Runnable,TaskInterface{
     private JsonObject bitswapStat;
     private IPFSNode ipfsNode;
     private AtomicBoolean exit;
+
+    private String threadName = "[OUTPUT_STATS] ";
 
 
     public OutputStats(String IP, String CID, JsonObject bitswapStat){
@@ -29,12 +33,18 @@ public class OutputStats implements Runnable,TaskInterface{
 
     @Override
     public void run() {
-        double size = getSize();
-        double initialDataReceived = (bitswapStat.get("DataReceived").getAsDouble() - bitswapStat.get("DupDataReceived").getAsDouble()); //Take the initial state of data received
-        dagStat();
+        Double size = getSize();
+        if(size == null){//If it is null an error has occurred, the statistics are not taken
+            System.out.println(threadName+"IPFS node error");
+            return;
+        }
+
+        double initialDataReceived = (bitswapStat.get("DataReceived").getAsDouble() - bitswapStat.get("DupDataReceived").getAsDouble()); //Removing the dupData from the all received data. This is the snapshot of the initial state of bitswap
+        Instant start = Instant.now();
+        dagStat(); //Printing the dag statistics associated to CID
 
         while (!exit.get()){
-            bitswapStat(initialDataReceived, size);
+            bitswapStat(initialDataReceived, size, start);
 
             try {
                 if(!exit.get()) Thread.sleep(3500);
@@ -45,17 +55,23 @@ public class OutputStats implements Runnable,TaskInterface{
         }
     }
 
-
-    private double getSize(){
+//  Return the size of object associated to CID. If an error occurs null is returned
+    private Double getSize(){
       JsonObject jsonObject = ipfsNode.objectStat(CID);
+      if(jsonObject == null) return null;
       return  jsonObject.get("CumulativeSize").getAsDouble();
     }
 
 
+//  Print the dag statistics associated to CID
     private void dagStat(){
         try {
             JsonObject dagObject = ipfsNode.dagGet(CID);
-            JsonArray linksArray = dagObject.getAsJsonArray("links");
+            if (dagObject == null){ //If it is null an error has occurred, the statistics are not updated
+                System.out.println(threadName+"IPFS node error (dagObject)");
+                return;
+            }
+            JsonArray linksArray = dagObject.getAsJsonArray("links"); //Taking the links from the dag
             String outputString = null;
             double size = 0;
 
@@ -77,19 +93,30 @@ public class OutputStats implements Runnable,TaskInterface{
     }
 
 
-    private void bitswapStat(double initialDataReceived, double size){
+//  This method print the statistics retrieved from bitswap
+    private void bitswapStat(double initialDataReceived, double size, Instant start){
         JsonObject newBitSwapStat = ipfsNode.bitswapStat();
-        double dataReceived = (newBitSwapStat.get("DataReceived").getAsDouble() - newBitSwapStat.get("DupDataReceived").getAsDouble());
+        if (newBitSwapStat == null){ //If it is null an error has occurred, the statistics are not updated
+            System.out.println(threadName+"IPFS node error (bitswapStat)");
+            return;
+        }
+        double dataReceived = (newBitSwapStat.get("DataReceived").getAsDouble() - newBitSwapStat.get("DupDataReceived").getAsDouble()); //Removing the dup data from all the data received
         double totalDataReceivedNow = dataReceived - initialDataReceived;
         double percentage = (totalDataReceivedNow/size)*100;
 
         JsonArray wantList = newBitSwapStat.getAsJsonArray("Wantlist");
         JsonArray peersList = newBitSwapStat.getAsJsonArray("Peers");
 
+        Instant end = Instant.now();
+        Duration interval = Duration.between(start,end);
+        String time = getTime(interval);
+
         System.out.print("\033[5A\r\033[J");
-        System.out.printf("%s / %s - %.2f%% | Wantlist [%d] | Peers[%d] ", convertSize(totalDataReceivedNow), convertSize(size), percentage, wantList.size(), peersList.size());
+        System.out.printf("%s / %s - %.2f%% | Wantlist [%d] | Peers[%d] | Time [%s]", convertSize(totalDataReceivedNow), convertSize(size), percentage, wantList.size(), peersList.size(), time);
     }
 
+
+//  This method convert the byte size for make it more human readable. It return a string.
     private String convertSize(double size){
         double kb = 1024;
         double mb = kb * 1024;
@@ -104,6 +131,17 @@ public class OutputStats implements Runnable,TaskInterface{
 
 
         return null;
+    }
+
+
+    private String getTime(Duration interval){
+        long seconds = interval.getSeconds();
+
+        return String.format(
+                "%d:%02d:%02d",
+                seconds / 3600,
+                (seconds % 3600) / 60,
+                seconds % 60);
     }
 
 }

@@ -24,11 +24,13 @@ public class GetObject implements Callable {
             ipfsNode.get(CID);
         }catch (IOException | InterruptedException e){
             e.printStackTrace();
+            return null;
         }
 
         Instant end = Instant.now();
         Duration interval = Duration.between(start,end);
         long seconds = interval.getSeconds();
+
         return String.format(
                 "%d:%02d:%02d",
                 seconds / 3600,

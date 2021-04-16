@@ -1,7 +1,5 @@
 package Aux_Classes;
 
-import com.google.gson.JsonObject;
-
 import java.io.*;
 
 public class BufferedFileWriter {

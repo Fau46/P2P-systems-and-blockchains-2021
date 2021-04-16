@@ -1,8 +1,9 @@
+import Aux_Classes.BufferedFileWriter;
 import Statistics.AgentVersion.AgentVersionStatistics;
 import Statistics.Bandwidth.BandwidthStatistics;
 import Statistics.IPFSNode;
 import Statistics.OutputStats;
-import Statistics.Peer.ActivePeersStatistics;
+import Statistics.Peers.ActivePeersStatistics;
 import Statistics.Streams.StreamsStatistics;
 import Statistics.TaskInterface;
 import com.google.gson.JsonObject;
@@ -16,7 +17,7 @@ import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) {
         String IP = "192.168.1.128:5001";
-        String CID = "QmNoscE3kNc83dM5rZNUC5UDXChiTdDcgf16RVtFCRWYuU ";
+        String CID = "QmdA5WkDNALetBn4iFeSepHjdLGJdxPBwZyY47ir1bZGAK";
         String time = null;
 
         //Check if the node is available
@@ -30,7 +31,10 @@ public class Main {
 
         IPFSNode ipfsNode = new IPFSNode(IP);
         JsonObject bitswapStat = ipfsNode.bitswapStat();
-
+        if(bitswapStat == null) { //If it is null an error has occurred
+            System.out.println("[MAIN] IPFS node error");
+            return;
+        }
 
         //Create thread pool and task list
         ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -40,7 +44,7 @@ public class Main {
         Test test = new Test();
         GetObject getObjectTask = new GetObject(IP,CID);
         OutputStats outputStatTask = new OutputStats(IP, CID, bitswapStat);
-        ActivePeersStatistics activePeersStatisticsTask = new ActivePeersStatistics(IP, CID);
+        ActivePeersStatistics activePeersStatisticsTask = new ActivePeersStatistics(IP);
         BandwidthStatistics bandwidthStatisticsTask = new BandwidthStatistics(IP);
         StreamsStatistics streamsStatisticsTask = new StreamsStatistics(IP);
         AgentVersionStatistics agentVersionStatisticsTask = new AgentVersionStatistics(IP);
@@ -53,7 +57,7 @@ public class Main {
 
 
         //Start the threads
-//        Future<String> futureGetObjectTask = threadPool.submit(test);
+//        Future<String> futureGetObjectTask = threadPool.submit(test); //TODO elimina
         Future<String> futureGetObjectTask = threadPool.submit(getObjectTask);
         for(TaskInterface task : taskList){
             threadPool.submit((Runnable) task);
@@ -62,6 +66,7 @@ public class Main {
 
         try {
             time = futureGetObjectTask.get();
+            System.out.println("\n");
 
             //Stop tasks
             for(TaskInterface task : taskList){
@@ -77,6 +82,12 @@ public class Main {
 
         System.out.println("\nDownload finished, total time "+time);
 
+        try {
+            BufferedFileWriter bufferedFileWriter = new BufferedFileWriter("time.txt");
+            bufferedFileWriter.writeAndClose(time);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
