@@ -1,0 +1,11 @@
+{
+  "Checked_peers": 5772,
+  "Streams": {
+    "/ipfs/kad/1.0.0": 5011,
+    "/ipfs/bitswap/1.1.0": 73,
+    "/ipfs/ping/1.0.0": 32,
+    "/libp2p/circuit/relay/0.1.0": 1,
+    "/ipfs/id/1.0.0": 381,
+    "/ipfs/bitswap/1.2.0": 918
+  }
+}

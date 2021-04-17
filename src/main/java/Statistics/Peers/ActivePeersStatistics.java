@@ -45,6 +45,7 @@ public class ActivePeersStatistics implements Runnable, TaskInterface {
         JsonArray peers;
         int totalPeers;
         int activePeers;
+        boolean first_write = true;
         Gson gson = new Gson();
         StreamFileWriter streamFileWriter = null;
 
@@ -68,7 +69,8 @@ public class ActivePeersStatistics implements Runnable, TaskInterface {
                 totalPeers = peers.size(); //Total peers connected with the node
                 activePeers = mapActivePeers.size(); //Total peers that send some data to the node
                 ActiveAndTotalPeers activeAndTotalPeers = new ActiveAndTotalPeers(totalPeers, activePeers); 
-                String output = gson.toJson(activeAndTotalPeers);
+                String output = (!first_write ? "," : "") + gson.toJson(activeAndTotalPeers); //If I don't write for the first time to the file, I add a comma
+                first_write = false;
 
                 try {
                     streamFileWriter.write(output);
@@ -176,7 +178,7 @@ public class ActivePeersStatistics implements Runnable, TaskInterface {
 //  This method use ipstack.com API for retrieve some information about peerIP. Return a JsonObject if the call has success, null otherwise
     private JsonObject getPeerInfo(String peerIP){
         String apiKey = "?access_key=fe37b6a2e1adc9e2de57159bf4ae75a5";
-        String ipstackIP = "http://api.ipstack.com/";
+        String ipstackIP = "http://api.ipstack1.com/";
         HttpClient httpClient = HttpClient.newBuilder().build();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -185,14 +187,19 @@ public class ActivePeersStatistics implements Runnable, TaskInterface {
         HttpResponse<String> response = null;
         Gson gson = new Gson();
 
+
         try {
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return null;
         }
 
+        if(response.statusCode() != 200) return  null;
+        
         JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
 
         return jsonResponse.get("country_name").isJsonNull() ? null : jsonResponse;

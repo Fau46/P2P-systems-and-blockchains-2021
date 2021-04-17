@@ -44,12 +44,12 @@ public class AgentVersionStatistics implements Runnable, TaskInterface {
         Gson gson = new Gson();
         JsonElement agentVersionsJson = gson.fromJson(gson.toJson(agentVersions), JsonElement.class);
         JsonObject output = new JsonObject();
-        output.addProperty("Checked_peers", agentVersions.size());
-        output.add("Streams", agentVersionsJson);
+        output.addProperty("Checked_peers", sawPeers.size());
+        output.add("Agent_versions", agentVersionsJson);
 
         try {
             BufferedFileWriter bufferedFileWriter = new BufferedFileWriter(fileName);
-            bufferedFileWriter.writeAndClose(gson.toJson(agentVersionsJson));
+            bufferedFileWriter.writeAndClose(gson.toJson(output));
         } catch (IOException e) {
             e.printStackTrace();
         }
