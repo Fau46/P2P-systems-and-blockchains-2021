@@ -45,8 +45,8 @@ public class ActivePeersStatistics implements Runnable, TaskInterface {
         JsonArray peers;
         int totalPeers;
         int activePeers;
-        boolean first_write = true;
         Gson gson = new Gson();
+        boolean first_write = true;
         StreamFileWriter streamFileWriter = null;
 
         swarmPeersInfo = getSwarmPeersInfo();
@@ -178,7 +178,7 @@ public class ActivePeersStatistics implements Runnable, TaskInterface {
 //  This method use ipstack.com API for retrieve some information about peerIP. Return a JsonObject if the call has success, null otherwise
     private JsonObject getPeerInfo(String peerIP){
         String apiKey = "?access_key=fe37b6a2e1adc9e2de57159bf4ae75a5";
-        String ipstackIP = "http://api.ipstack1.com/";
+        String ipstackIP = "http://api.ipstack.com/";
         HttpClient httpClient = HttpClient.newBuilder().build();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -199,7 +199,7 @@ public class ActivePeersStatistics implements Runnable, TaskInterface {
         }
 
         if(response.statusCode() != 200) return  null;
-        
+
         JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
 
         return jsonResponse.get("country_name").isJsonNull() ? null : jsonResponse;

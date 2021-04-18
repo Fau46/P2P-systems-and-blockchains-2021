@@ -1,4 +1,4 @@
-package Statistics.AgentVersion;
+package Statistics.AgentVersions;
 
 import Aux_Classes.BufferedFileWriter;
 import Statistics.IPFSNode;

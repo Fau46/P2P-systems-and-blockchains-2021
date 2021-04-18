@@ -235,7 +235,7 @@ window.onload = function () {
       rateInPoint.push({x: new Date(value.time), y: yIn})
       rateOutPoint.push({x: new Date(value.time), y: yOut})
     })
-    avg = Math.round(avg/rateOutPoint.length);
+    avg = Math.round(avg/rateInPoint.length);
 
     $.each(data, function(key,value){
       avgPoint.push({x: new Date(value.time), y: avg})
@@ -264,7 +264,7 @@ window.onload = function () {
       {
         type: "spline",
 		    showInLegend: true,
-		    name: "Avg kb/s",
+		    name: "Avg Rate In kb/s",
 		    dataPoints: avgPoint
       }]
     });
@@ -408,7 +408,7 @@ window.onload = function () {
   <table id="table_active_peers" style="height: 300px; max-width: 920px; margin: 0px auto;"></table><br/>
   <div id="columnChartContinent" style="height: 300px; max-width: 920px; margin: 0px auto;"></div><br/>
   <div id="columnChartEurope" style="height: 300px; max-width: 1220px; margin: 0px auto;"></div><br/>
-  <div id="columnChartAgentVersions" style="height: 300px; max-width: 1220px; margin: 0px auto;"></div><br/>
+  <div id="columnChartAgentVersions" style="height: 300px; max-width: 1320px; margin: 0px auto;"></div><br/>
   <div id="bandwidthChart" style="height: 300px; max-width: 920px; margin: 0px auto;"></div><br/>
   <div id="peersStatisticsChart" style="height: 300px; max-width: 920px; margin: 0px auto;"></div><br/>
   <div id="streamsStatisticsChart" style="height: 300px; max-width: 920px; margin: 0px auto;"></div><br/>

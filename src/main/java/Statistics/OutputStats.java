@@ -111,8 +111,8 @@ public class OutputStats implements Runnable,TaskInterface{
         Duration interval = Duration.between(start,end);
         String time = getTime(interval);
 
-        System.out.print("\033[5A\r\033[J");
-        System.out.printf("%s / %s - %.2f%% | Wantlist [%d] | Peers[%d] | Time [%s]", convertSize(totalDataReceivedNow), convertSize(size), percentage, wantList.size(), peersList.size(), time);
+//        System.out.print("\033[5A\r\033[J");
+        System.out.printf("%s / %s - %.2f%% | Wantlist [%d] | Peers[%d] | Time [%s]\n", convertSize(totalDataReceivedNow), convertSize(size), percentage, wantList.size(), peersList.size(), time);
     }
 
 

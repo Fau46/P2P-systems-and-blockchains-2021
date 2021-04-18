@@ -1,5 +1,5 @@
 import Aux_Classes.BufferedFileWriter;
-import Statistics.AgentVersion.AgentVersionStatistics;
+import Statistics.AgentVersions.AgentVersionStatistics;
 import Statistics.Bandwidth.BandwidthStatistics;
 import Statistics.IPFSNode;
 import Statistics.OutputStats;
@@ -17,7 +17,7 @@ import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) {
         String IP = "192.168.1.128:5001";
-        String CID = "QmdA5WkDNALetBn4iFeSepHjdLGJdxPBwZyY47ir1bZGAK";
+        String CID = "QmdmQXB2mzChmMeKY47C43LxUdg1NDJ5MWcKMKxDu7RgQm";
         String time = null;
 
         //Check if the node is available
@@ -41,7 +41,6 @@ public class Main {
         List<TaskInterface> taskList = new ArrayList<>();
 
         //Setup tasks
-        Test test = new Test();
         GetObject getObjectTask = new GetObject(IP,CID);
         OutputStats outputStatTask = new OutputStats(IP, CID, bitswapStat);
         ActivePeersStatistics activePeersStatisticsTask = new ActivePeersStatistics(IP);
@@ -57,7 +56,6 @@ public class Main {
 
 
         //Start the threads
-//        Future<String> futureGetObjectTask = threadPool.submit(test); //TODO elimina
         Future<String> futureGetObjectTask = threadPool.submit(getObjectTask);
         for(TaskInterface task : taskList){
             threadPool.submit((Runnable) task);
