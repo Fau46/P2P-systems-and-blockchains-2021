@@ -1,0 +1,100 @@
+{
+  "12D3KooWEhQXkreEF9bAHenXtWcZ4xcxB7ujM8mX4W2PqTNjYJdK": {
+    "recv": 11534952,
+    "sent": 0,
+    "exchanged": 44,
+    "latency": 144,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "18.205.56.49",
+    "continent": "North America",
+    "country": "United States",
+    "region": "Virginia",
+    "city": "Ashburn"
+  },
+  "QmUEMvxS2e7iDrereVYc5SWPauXPyNwxcy9BXZrC1QTcHE": {
+    "recv": 16830989,
+    "sent": 0,
+    "exchanged": 165,
+    "latency": 518,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "94.130.135.167",
+    "continent": "Europe",
+    "country": "Germany",
+    "region": "Berlin",
+    "city": "Berlin"
+  },
+  "QmNSYxZAiJHeLdkBg38roksAR9So7Y5eojks1yjEcUtZ7i": {
+    "recv": 19310036806,
+    "sent": 0,
+    "exchanged": 74483,
+    "latency": 52,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "138.201.67.220",
+    "continent": "Europe",
+    "country": "Germany",
+    "region": "Bavaria",
+    "city": "Gunzenhausen"
+  },
+  "12D3KooWMpaGqxramvtTjLK9jLdr1MqWKkwEYbcmEzzeUfuHok4C": {
+    "recv": 2359531,
+    "sent": 0,
+    "exchanged": 10,
+    "latency": 148,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "3.92.152.122",
+    "continent": "North America",
+    "country": "United States",
+    "region": "Virginia",
+    "city": "Ashburn"
+  },
+  "12D3KooWLFkFCGwxyFpoiVgUUscmiJL62vZoz95jyfgiJMim372g": {
+    "recv": 5243160,
+    "sent": 0,
+    "exchanged": 20,
+    "latency": 153,
+    "streams": [
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/bitswap/1.2.0"
+      },
+      {
+        "Protocol": "/ipfs/kad/1.0.0"
+      }
+    ],
+    "IP": "34.201.128.226",
+    "continent": "North America",
+    "country": "United States",
+    "region": "Virginia",
+    "city": "Ashburn"
+  }
+}
