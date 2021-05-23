@@ -1,5 +1,16 @@
-constructor: gas: 1217571
+-- 1W_vs_1L --
+
+constructor: 1283823
 compute_envelope: 23052
 cast_envelope:53023
 open_envelope: 141715
-mayor_or_sayonara: 90760
+mayor_or_sayonara: 69141
+
+-- 50W_vs_20L -- 
+250383
+
+-- 1W_vs_1000L
+9600574
+
+-- 50W_vs_50L -- 
+536551

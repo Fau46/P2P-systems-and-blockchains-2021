@@ -10,8 +10,6 @@ contract("Testing Mayor", accounts => {
   const voter_1 = accounts[2];
   const voter_2 = accounts[3];
 
-  // const eth = web3.utils.toBN(1000000000000000000);
-  const eth = 1;
   var instance;
   var ce1;
   var ce2;
@@ -45,9 +43,9 @@ contract("Testing Mayor", accounts => {
   })
 
   it("Should test mayor_or_sayonara", async function(){
-    const result = await instance.mayor_or_sayonara.estimateGas({from: deployer});
-    // const result = await instance.mayor_or_sayonara({from: deployer});
-    console.log(result)
+    await instance.mayor_or_sayonara({from: deployer});
+    // const result = await instance.mayor_or_sayonara.estimateGas({from: deployer});
+    // console.log(result)
   })
   
  });

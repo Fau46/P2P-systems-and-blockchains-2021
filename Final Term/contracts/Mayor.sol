@@ -57,9 +57,9 @@ contract Mayor {
 
     // Refund phase variables
     mapping(address => Refund) souls;
-    address[] losers;
     address[] yayVoters;
     address[] nayVoters;
+    bool elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
 
     /// @notice The constructor only initializes internal variables
     /// @param _candidate (address) The address of the mayor candidate
@@ -91,14 +91,13 @@ contract Mayor {
     /// @dev Need to recompute the hash to validate the envelope previously casted
     function open_envelope(uint _sigil, bool _doblon) canOpen public payable {       
         require(envelopes[msg.sender] != 0x0, "The sender has not casted any votes");
+        require(souls[msg.sender].opened == false, "Envelope already opened");
         
         bytes32 _casted_envelope = envelopes[msg.sender];
         bytes32 _sent_envelope = compute_envelope(_sigil,_doblon, msg.value);
 
         require(_casted_envelope == _sent_envelope, "Sent envelope does not correspond to the one casted");
-        require(souls[msg.sender].opened == false, "Envelope already opened");
-        
-        
+               
         souls[msg.sender] = Refund({soul: msg.value, doblon: _doblon, opened: true});
         voting_condition.envelopes_opened++;
         
@@ -117,13 +116,11 @@ contract Mayor {
     
     /// @notice Either confirm or kick out the candidate. Refund the electors who voted for the losing outcome
     function mayor_or_sayonara() canCheckOutcome public {
+        require(elections_over == false, "The elections are over");
+        elections_over = true;
 
-        // TODO Complete this function
-            
-            // emit the NewMayor() event if the candidate is confirmed as mayor
-            // emit the Sayonara() event if the candidate is NOT confirmed as mayor
-        
         bool result = yaySoul>naySoul;
+        address[] memory losers;
 
         if(result){
             losers = nayVoters;
