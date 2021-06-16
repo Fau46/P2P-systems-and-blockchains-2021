@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts/Mayor.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> Mayor.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>69/69</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">77.27% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>34/44</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>71/71</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity 0.8.1;
+&nbsp;
+contract Mayor {
+    
+    // Structs, events, and modifiers
+    
+    struct Register_candidate{
+        address candidate_address;
+        address coalition_address;
+    }
+&nbsp;
+    struct Voter {
+        uint soul;
+        address candidate;
+        bool opened;
+    }
+&nbsp;
+    struct Candidate{
+        uint soul;
+        uint voters_num;
+        bool init;
+        // Voter[] voters;
+    }
+&nbsp;
+    struct Coalition{
+        address[] members;
+        uint soul;
+        bool init;
+        // Voter[] voters;
+    }
+&nbsp;
+    struct Coalition_winner{
+        address addr;
+        uint soul;
+    }
+&nbsp;
+    struct Candidate_winner{
+        address addr;
+        uint soul;
+        uint voters_num;
+    }
+&nbsp;
+    // Data to manage the confirmation
+    struct Conditions {
+        uint32 quorum;
+        uint32 envelopes_casted;
+        uint32 envelopes_opened;
+    }
+    
+    event NewMayor(address _candidate);
+    event Sayonara(address _escrow);
+    event EnvelopeCast(address _voter);
+    event EnvelopeOpen(address _voter, uint _soul, address _candidate);
+    
+    // Someone can vote as long as the quorum is not reached
+    modifier canVote() {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(voting_condition.envelopes_casted &lt; voting_condition.quorum, "Cannot vote now, voting quorum has been reached");
+        _;   
+    }
+    
+    // Envelopes can be opened only after receiving the quorum
+    modifier canOpen() {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(voting_condition.envelopes_casted == voting_condition.quorum, "Cannot open an envelope, voting quorum not reached yet");
+        _;
+    }
+    
+    // The outcome of the confirmation can be computed as soon as all the casted envelopes have been opened
+    modifier canCheckOutcome() {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(voting_condition.envelopes_opened == voting_condition.quorum, "Cannot check the winner, need to open all the sent envelopes");
+        _;
+    }
+    
+    // State attributes
+    
+    // Initialization variables
+    address payable public escrow;
+&nbsp;
+    // Voting phase variables
+    mapping(address =&gt; bytes32) envelopes;
+&nbsp;
+    Conditions voting_condition;
+    Coalition_winner coalition_winner;
+    Candidate_winner candidate_winner;
+&nbsp;
+    uint public totSouls;
+    mapping (address =&gt; Candidate) candidates;
+    mapping (address =&gt; Coalition) coalitions;
+    mapping(address =&gt; Voter) voters;
+    address[] candidate_addrs;
+    address[] coalitions_addrs;
+    address[] voters_addrs;
+    bool elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
+&nbsp;
+    /// @notice The constructor only initializes internal variables
+    /// @param _candidates (address) The address of the mayor candidate and optionally also the coaliton's address
+    /// @param _escrow (address) The address of the escrow account
+    /// @param _quorum (address) The number of voters required to finalize the confirmation
+    constructor(Register_candidate[] memory _candidates, address payable _escrow, uint32 _quorum) public {
+        for(uint i = 0; i &lt; _candidates.length; i++){
+            address candidate_addr = _candidates[i].candidate_address;
+            address coalition_addr = _candidates[i].coalition_address;
+&nbsp;
+            require(coalitions[candidate_addr].init == false, "The candidate cannot be a coalition");
+            require(candidates[candidate_addr].init == false, "The candidate is already registered");
+&nbsp;
+            candidates[candidate_addr] = Candidate({soul: 0, voters_num:0, init: true});
+            candidate_addrs.push(candidate_addr);
+            
+            if(coalition_addr != address(0x0)){
+                <span class="missing-if-branch" title="else path not taken" >E</span>require(candidates[coalition_addr].init == false, "The coalition cannot be a candidate");
+                coalitions[coalition_addr].init = true;
+                coalitions[coalition_addr].members.push(candidate_addr);
+                coalitions_addrs.push(coalition_addr);
+            }
+        }
+&nbsp;
+        escrow = _escrow;
+        voting_condition = Conditions({quorum: _quorum, envelopes_casted: 0, envelopes_opened: 0});
+    }
+&nbsp;
+&nbsp;
+    /// @notice Store a received voting envelope
+    /// @param _envelope The envelope represented as the keccak256 hash of (sigil, doblon, soul) 
+    function cast_envelope(bytes32 _envelope) canVote public {
+        
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(envelopes[msg.sender] == 0x0) // =&gt; NEW, update on 17/05/2021
+            voting_condition.envelopes_casted++;
+&nbsp;
+        envelopes[msg.sender] = _envelope;
+        emit EnvelopeCast(msg.sender);
+    }
+    
+    
+    /// @notice Open an envelope and store the vote information
+    /// @param _sigil (uint) The secret sigil of a voter
+    /// @param _candidate (address) The voting preference
+    /// @dev The soul is sent as crypto
+    /// @dev Need to recompute the hash to validate the envelope previously casted
+    function open_envelope(uint _sigil, address _candidate) canOpen public payable {       
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(envelopes[msg.sender] != 0x0, "The sender has not casted any votes");
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(voters[msg.sender].opened == false, "Envelope already opened");
+        
+        bytes32 _casted_envelope = envelopes[msg.sender];
+        bytes32 _sent_envelope = compute_envelope(_sigil, _candidate, msg.value);
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_casted_envelope == _sent_envelope, "Sent envelope does not correspond to the one casted");
+        
+        voting_condition.envelopes_opened++;
+&nbsp;
+        if(coalitions[_candidate].init == true){ //if the voter has voted for a coalition
+            voters_addrs.push(msg.sender);
+            voters[msg.sender] = Voter({soul: msg.value, candidate: _candidate, opened: true});
+            coalitions[_candidate].soul += msg.value;
+            totSouls+=msg.value;
+            
+            if(coalitions[_candidate].soul &gt; coalition_winner.soul){
+                coalition_winner.addr = _candidate;
+                coalition_winner.soul = coalitions[_candidate].soul;
+            }
+            else if(coalitions[_candidate].soul == coalition_winner.soul){
+                coalition_winner.addr = address(0x0); //Reset the winner due to tie
+            }
+        }
+        else if(candidates[_candidate].init == true){
+            voters_addrs.push(msg.sender);
+            voters[msg.sender] = Voter({soul: msg.value, candidate: _candidate, opened: true});
+            candidates[_candidate].soul += msg.value;
+            candidates[_candidate].voters_num++;
+            totSouls+=msg.value;
+&nbsp;
+            if((candidates[_candidate].soul &gt; candidate_winner.soul) || (candidates[_candidate].soul == candidate_winner.soul &amp;&amp; candidates[_candidate].voters_num &gt; candidate_winner.voters_num)){ //if _candiate has more soul or equal soul and more voters than the actual winner
+                candidate_winner.addr = _candidate;
+                candidate_winner.soul = candidates[_candidate].soul;
+                candidate_winner.voters_num = candidates[_candidate].voters_num;
+            }
+            else <span class="missing-if-branch" title="else path not taken" >E</span>if(candidates[_candidate].soul == candidate_winner.soul &amp;&amp; candidates[_candidate].voters_num == candidate_winner.voters_num){ //case of tie
+                candidate_winner.addr = address(0x0); //reset the winner
+            }
+           
+        }
+        else{
+            address payable voter = payable(msg.sender);
+            voter.transfer(msg.value); //the voter has voted for someone that is not a candidate or a coalition
+        }
+&nbsp;
+        emit EnvelopeOpen(msg.sender, msg.value, _candidate);
+    }
+    
+    
+    /// @notice Either confirm or kick out the candidate. Refund the electors who voted for the losing outcome
+    function mayor_or_sayonara() canCheckOutcome public {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(elections_over == false, "The elections are over");
+        elections_over = true;
+        address payable winner;
+        uint winner_soul;
+&nbsp;
+        if(coalition_winner.addr != address(0x0) &amp;&amp; coalition_winner.soul &gt; totSouls/3){
+            winner = payable(coalition_winner.addr);
+            winner_soul = coalition_winner.soul;
+        }
+        else if(candidate_winner.addr != address(0x0)){
+            winner = payable(candidate_winner.addr);
+            winner_soul = candidate_winner.soul;
+        }
+        
+&nbsp;
+        if(winner != address(0x0)){
+            winner.transfer(winner_soul);
+&nbsp;
+            for(uint i = 0; i &lt; voters_addrs.length; i++){
+                address payable voter = payable(voters_addrs[i]);
+                if(winner != voters[voter].candidate){
+                    voter.transfer(voters[voter].soul);
+                }
+            }
+&nbsp;
+            emit NewMayor(winner);
+        }
+        else{
+            escrow.transfer(totSouls);
+            emit Sayonara(escrow);
+        }
+    }
+ 
+ 
+    /// @notice Compute a voting envelope
+    /// @param _sigil (uint) The secret sigil of a voter
+    /// @param _candidate (address) The voting preference
+    /// @param _soul (uint) The soul associated to the vote
+    function compute_envelope(uint _sigil, address _candidate, uint _soul) public pure returns(bytes32) {
+        return keccak256(abi.encode(_sigil, _candidate, _soul));
+    }
+    
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 16 2021 17:17:45 GMT+0200 (Ora legale dell’Europa centrale)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

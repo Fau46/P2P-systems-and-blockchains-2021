@@ -9,27 +9,35 @@ contract Mayor {
         address coalition_address;
     }
 
-    struct Candidate{
-        uint soul;
-        uint voters_num;
-        bool init;
-    }
-
-    struct Coalition{
-        address[] members;
-        uint soul;
-        bool init;
-    }
-
     struct Voter {
         uint soul;
         address candidate;
         bool opened;
     }
 
+    struct Candidate{
+        uint soul;
+        uint voters_num;
+        bool init;
+        // Voter[] voters;
+    }
+
+    struct Coalition{
+        address[] members;
+        uint soul;
+        bool init;
+        // Voter[] voters;
+    }
+
     struct Coalition_winner{
         address addr;
         uint soul;
+    }
+
+    struct Candidate_winner{
+        address addr;
+        uint soul;
+        uint voters_num;
     }
 
     // Data to manage the confirmation
@@ -42,7 +50,7 @@ contract Mayor {
     event NewMayor(address _candidate);
     event Sayonara(address _escrow);
     event EnvelopeCast(address _voter);
-    event EnvelopeOpen(address _voter, uint _soul, bool _doblon);
+    event EnvelopeOpen(address _voter, uint _soul, address _candidate);
     
     // Someone can vote as long as the quorum is not reached
     modifier canVote() {
@@ -66,13 +74,13 @@ contract Mayor {
     
     // Initialization variables
     address payable public escrow;
-    address coalition_winner;
-    address candidate_winner;
 
     // Voting phase variables
     mapping(address => bytes32) envelopes;
 
     Conditions voting_condition;
+    Coalition_winner coalition_winner;
+    Candidate_winner candidate_winner;
 
     uint public totSouls;
     mapping (address => Candidate) candidates;
@@ -93,7 +101,7 @@ contract Mayor {
             address coalition_addr = _candidates[i].coalition_address;
 
             require(coalitions[candidate_addr].init == false, "The candidate cannot be a coalition");
-            require(candidates[candidate_addr].init == false, "The candidate already registered");
+            require(candidates[candidate_addr].init == false, "The candidate is already registered");
 
             candidates[candidate_addr] = Candidate({soul: 0, voters_num:0, init: true});
             candidate_addrs.push(candidate_addr);
@@ -136,54 +144,83 @@ contract Mayor {
         bytes32 _sent_envelope = compute_envelope(_sigil, _candidate, msg.value);
 
         require(_casted_envelope == _sent_envelope, "Sent envelope does not correspond to the one casted");
-               
-        voters[msg.sender] = Voter({soul: msg.value, candidate: _candidate, opened: true});
-        voting_condition.envelopes_opened++;
         
-        if(coalitions[candidate].init == true){
-            //TODO completa la fase di controllo del vincitore
-            yayVoters.push(msg.sender);
-            yaySoul += msg.value;
+        voting_condition.envelopes_opened++;
+
+        if(coalitions[_candidate].init == true){ //if the voter has voted for a coalition
+            voters_addrs.push(msg.sender);
+            voters[msg.sender] = Voter({soul: msg.value, candidate: _candidate, opened: true});
+            coalitions[_candidate].soul += msg.value;
+            totSouls+=msg.value;
+            
+            if(coalitions[_candidate].soul > coalition_winner.soul){
+                coalition_winner.addr = _candidate;
+                coalition_winner.soul = coalitions[_candidate].soul;
+            }
+            else if(coalitions[_candidate].soul == coalition_winner.soul){
+                coalition_winner.addr = address(0x0); //Reset the winner due to tie
+            }
+        }
+        else if(candidates[_candidate].init == true){
+            voters_addrs.push(msg.sender);
+            voters[msg.sender] = Voter({soul: msg.value, candidate: _candidate, opened: true});
+            candidates[_candidate].soul += msg.value;
+            candidates[_candidate].voters_num++;
+            totSouls+=msg.value;
+
+            if((candidates[_candidate].soul > candidate_winner.soul) || (candidates[_candidate].soul == candidate_winner.soul && candidates[_candidate].voters_num > candidate_winner.voters_num)){ //if _candiate has more soul or equal soul and more voters than the actual winner
+                candidate_winner.addr = _candidate;
+                candidate_winner.soul = candidates[_candidate].soul;
+                candidate_winner.voters_num = candidates[_candidate].voters_num;
+            }
+            else if(candidates[_candidate].soul == candidate_winner.soul && candidates[_candidate].voters_num == candidate_winner.voters_num){ //case of tie
+                candidate_winner.addr = address(0x0); //reset the winner
+            }
+           
         }
         else{
-            nayVoters.push(msg.sender);
-            naySoul += msg.value;
+            address payable voter = payable(msg.sender);
+            voter.transfer(msg.value); //the voter has voted for someone that is not a candidate or a coalition
         }
 
-        emit EnvelopeOpen(msg.sender, msg.value, _doblon);
+        emit EnvelopeOpen(msg.sender, msg.value, _candidate);
     }
     
     
-    // /// @notice Either confirm or kick out the candidate. Refund the electors who voted for the losing outcome
-    // function mayor_or_sayonara() canCheckOutcome public {
-    //     require(elections_over == false, "The elections are over");
-    //     elections_over = true;
+    /// @notice Either confirm or kick out the candidate. Refund the electors who voted for the losing outcome
+    function mayor_or_sayonara() canCheckOutcome public {
+        require(elections_over == false, "The elections are over");
+        elections_over = true;
+        address payable winner;
+        uint winner_soul;
 
-    //     bool result = yaySoul>naySoul;
-    //     address[] memory losers;
+        if(coalition_winner.addr != address(0x0) && coalition_winner.soul > totSouls/3){
+            winner = payable(coalition_winner.addr);
+            winner_soul = coalition_winner.soul;
+        }
+        else if(candidate_winner.addr != address(0x0)){
+            winner = payable(candidate_winner.addr);
+            winner_soul = candidate_winner.soul;
+        }
+        
 
-    //     if(result){
-    //         losers = nayVoters;
-    //     }
-    //     else{
-    //         losers = yayVoters;
-    //     }
+        if(winner != address(0x0)){
+            winner.transfer(winner_soul);
 
-    //     for(uint i; i<losers.length; i++){
-    //         address payable voter = payable(losers[i]);
-    //         voter.transfer(souls[voter].soul);
-    //     }
+            for(uint i = 0; i < voters_addrs.length; i++){
+                address payable voter = payable(voters_addrs[i]);
+                if(winner != voters[voter].candidate){
+                    voter.transfer(voters[voter].soul);
+                }
+            }
 
-    //     if(result){
-    //         candidate.transfer(yaySoul);
-    //         emit NewMayor(candidate);
-    //     }
-    //     else{
-    //         escrow.transfer(naySoul);
-    //         emit Sayonara(escrow);
-    //     }
-
-    // }
+            emit NewMayor(winner);
+        }
+        else{
+            escrow.transfer(totSouls);
+            emit Sayonara(escrow);
+        }
+    }
  
  
     /// @notice Compute a voting envelope
