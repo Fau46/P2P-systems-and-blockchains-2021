@@ -28,13 +28,21 @@ export default class RouterPages extends React.Component{
     const account = await this.web3.eth.getAccounts();
     const contract_instance = await this.state.contract.deployed();
     const candidates = await contract_instance.get_candidate_addrs.call();
-    console.log(candidates)
+    console.log(account)
+    if (window.ethereum) {
+      // this.setState({ address: window.ethereum.selectedAddress });
+      window.ethereum.on("accountsChanged", accounts => {
+        this.setState({ account: accounts[0] });
+        console.log(accounts[0])
+      });
+    }
+
     this.setState({account: account, contract_instance: contract_instance, candidates: candidates})
   }
 
   render(){
     return(
-      <LayoutPage>
+      <LayoutPage account={this.state.account}>
         <Candidates state={this.state}/>
       </LayoutPage>
     )
