@@ -73,8 +73,6 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
   },
-  
-  plugins: ["solidity-coverage"],
 
   // Set default mocha options here, use special reporters etc.
   mocha: {
@@ -96,6 +94,8 @@ module.exports = {
     }
   },
 
+  plugins: ["solidity-coverage"],
+  
   // Truffle DB is currently disabled by default; to enable it, change enabled: false to enabled: true
   //
   // Note: if you migrated your contracts prior to enabling this field in your Truffle project and want

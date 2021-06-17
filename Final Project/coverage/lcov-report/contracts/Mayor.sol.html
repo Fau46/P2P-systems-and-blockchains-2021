@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">92.11% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>69/69</span>
+        <span class='fraction'>70/76</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.27% </span>
+        <span class="strong">78.26% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>34/44</span>
+        <span class='fraction'>36/46</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">80% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>8/8</span>
+        <span class='fraction'>8/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">92.31% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>71/71</span>
+        <span class='fraction'>72/78</span>
       </div>
     </div>
   </div>
@@ -276,7 +276,31 @@
 231
 232
 233
-234</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -387,8 +411,11 @@
 <span class="cline-any cline-yes">19×</span>
 <span class="cline-any cline-yes">16×</span>
 <span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16×</span>
-<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -509,6 +536,21 @@
 <span class="cline-any cline-yes">24×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity 0.8.1;
 &nbsp;
 contract Mayor {
@@ -530,14 +572,17 @@ contract Mayor {
         uint soul;
         uint voters_num;
         bool init;
-        // Voter[] voters;
     }
 &nbsp;
     struct Coalition{
         address[] members;
         uint soul;
         bool init;
-        // Voter[] voters;
+    }
+&nbsp;
+    struct Return_coalition{
+        address[] members;
+        address addr;
     }
 &nbsp;
     struct Coalition_winner{
@@ -597,7 +642,7 @@ contract Mayor {
     mapping (address =&gt; Candidate) candidates;
     mapping (address =&gt; Coalition) coalitions;
     mapping(address =&gt; Voter) voters;
-    address[] candidate_addrs;
+    address[] candidates_addrs;
     address[] coalitions_addrs;
     address[] voters_addrs;
     bool elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
@@ -615,13 +660,16 @@ contract Mayor {
             require(candidates[candidate_addr].init == false, "The candidate is already registered");
 &nbsp;
             candidates[candidate_addr] = Candidate({soul: 0, voters_num:0, init: true});
-            candidate_addrs.push(candidate_addr);
+            candidates_addrs.push(candidate_addr);
             
             if(coalition_addr != address(0x0)){
                 <span class="missing-if-branch" title="else path not taken" >E</span>require(candidates[coalition_addr].init == false, "The coalition cannot be a candidate");
-                coalitions[coalition_addr].init = true;
                 coalitions[coalition_addr].members.push(candidate_addr);
-                coalitions_addrs.push(coalition_addr);
+                
+                if(coalitions[coalition_addr].init == false){
+                    coalitions[coalition_addr].init = true;
+                    coalitions_addrs.push(coalition_addr);
+                }
             }
         }
 &nbsp;
@@ -741,14 +789,29 @@ contract Mayor {
     function compute_envelope(uint _sigil, address _candidate, uint _soul) public pure returns(bytes32) {
         return keccak256(abi.encode(_sigil, _candidate, _soul));
     }
-    
+&nbsp;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function get_candidate_addrs() external view returns (address[] memory){</span>
+<span class="cstat-no" title="statement not covered" >        return candidates_addrs;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function get_coalitions() external view returns (Return_coalition[] memory){</span>
+<span class="cstat-no" title="statement not covered" >        Return_coalition[] memory coalitions_array = new Return_coalition[](coalitions_addrs.length);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        for(uint i = 0; i &lt; coalitions_addrs.length; i++){</span>
+<span class="cstat-no" title="statement not covered" >            address coalition = coalitions_addrs[i];</span>
+<span class="cstat-no" title="statement not covered" >            coalitions_array[i] = Return_coalition({members: coalitions[coalition].members, addr: coalition})</span>;
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return coalitions_array;</span>
+    }
 }</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 16 2021 17:17:45 GMT+0200 (Ora legale dell’Europa centrale)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jun 17 2021 12:57:40 GMT+0200 (Ora legale dell’Europa centrale)
 </div>
 </div>
 <script src="../prettify.js"></script>

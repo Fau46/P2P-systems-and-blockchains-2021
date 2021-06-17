@@ -19,14 +19,17 @@ contract Mayor {
         uint soul;
         uint voters_num;
         bool init;
-        // Voter[] voters;
     }
 
     struct Coalition{
         address[] members;
         uint soul;
         bool init;
-        // Voter[] voters;
+    }
+
+    struct Return_coalition{
+        address[] members;
+        address addr;
     }
 
     struct Coalition_winner{
@@ -86,7 +89,7 @@ contract Mayor {
     mapping (address => Candidate) candidates;
     mapping (address => Coalition) coalitions;
     mapping(address => Voter) voters;
-    address[] candidate_addrs;
+    address[] candidates_addrs;
     address[] coalitions_addrs;
     address[] voters_addrs;
     bool elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
@@ -104,13 +107,16 @@ contract Mayor {
             require(candidates[candidate_addr].init == false, "The candidate is already registered");
 
             candidates[candidate_addr] = Candidate({soul: 0, voters_num:0, init: true});
-            candidate_addrs.push(candidate_addr);
+            candidates_addrs.push(candidate_addr);
             
             if(coalition_addr != address(0x0)){
                 require(candidates[coalition_addr].init == false, "The coalition cannot be a candidate");
-                coalitions[coalition_addr].init = true;
                 coalitions[coalition_addr].members.push(candidate_addr);
-                coalitions_addrs.push(coalition_addr);
+                
+                if(coalitions[coalition_addr].init == false){
+                    coalitions[coalition_addr].init = true;
+                    coalitions_addrs.push(coalition_addr);
+                }
             }
         }
 
@@ -230,5 +236,20 @@ contract Mayor {
     function compute_envelope(uint _sigil, address _candidate, uint _soul) public pure returns(bytes32) {
         return keccak256(abi.encode(_sigil, _candidate, _soul));
     }
-    
+
+
+    function get_candidate_addrs() external view returns (address[] memory){
+        return candidates_addrs;
+    }
+
+    function get_coalitions() external view returns (Return_coalition[] memory){
+        Return_coalition[] memory coalitions_array = new Return_coalition[](coalitions_addrs.length);
+
+        for(uint i = 0; i < coalitions_addrs.length; i++){
+            address coalition = coalitions_addrs[i];
+            coalitions_array[i] = Return_coalition({members: coalitions[coalition].members, addr: coalition});
+        }
+
+        return coalitions_array;
+    }
 }
