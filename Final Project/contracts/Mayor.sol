@@ -81,11 +81,11 @@ contract Mayor {
     // Voting phase variables
     mapping(address => bytes32) envelopes;
 
-    Conditions voting_condition;
+    Conditions public voting_condition;
     Coalition_winner coalition_winner;
     Candidate_winner candidate_winner;
 
-    uint public totSouls;
+    uint totSouls;
     mapping (address => Candidate) candidates;
     mapping (address => Coalition) coalitions;
     mapping(address => Voter) voters;
@@ -251,5 +251,9 @@ contract Mayor {
         }
 
         return coalitions_array;
+    }
+
+    function get_voting_condition() external view returns(uint32,uint32,uint32){
+        return (voting_condition.quorum,voting_condition.envelopes_casted,voting_condition.envelopes_opened);
     }
 }

@@ -4,18 +4,19 @@ import { UserOutlined } from '@ant-design/icons';
 
 
 
-export default function Candidates(props) {
+export default function OpenEnvelope(props) {
   
   var candidates = props.state.candidates;
   var contract_instace = props.state.contract_instance
   var component = [];
-
-  const success = () => {message.info('Envelope casted');}
+  
+  const success = () => {message.info('Envelope opened');}
 
   const onFinish = async (values) => {
-    var envelope = await contract_instace.compute_envelope(values.sigil, values.candidate, values.soul);
-    await contract_instace.cast_envelope(envelope, {from: props.state.account});
+    var envelope = await contract_instace.open_envelope(values.sigil, values.candidate, {from: props.state.account, value: values.soul})
+    console.log(envelope)
     success()
+
   };
 
   if(candidates){
@@ -34,7 +35,7 @@ export default function Candidates(props) {
                   </Form.Item>
                   <Form.Item name="candidate" initialValue={candidate} style={{height: "0px"}} />
                   <Form.Item>
-                    <div style={{marginLeft : "100px", marginTop: "0px"}}><Button htmlType="submit" type="primary" shape="round">VOTE</Button></div>
+                    <div style={{marginLeft : "63px"}}><Button htmlType="submit" type="primary" shape="round">OPEN ENVELOPE</Button></div>
                   </Form.Item>
                 </Form>
               </Card>
@@ -46,10 +47,8 @@ export default function Candidates(props) {
   }
 
   return(
-    // <Space align="center" size="large">
       <Row style={{padding: 50}}gutter={[16, 24]} >
         {component}
       </Row>
-    // </Space>
   )
 }  

@@ -24,7 +24,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "lite-server",
-    
     "coverage": "truffle run coverage",
     "migrate": "truffle migrate --reset --network development",
     "ganache": "ganache-cli -a 100"

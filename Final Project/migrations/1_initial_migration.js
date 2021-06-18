@@ -33,5 +33,5 @@ module.exports = async function (deployer, newtwork, accounts) {
     }
   ]
 
-  await deployer.deploy(Mayor, candidate_list, escrow, 3);
+  await deployer.deploy(Mayor, candidate_list, escrow, 1);
 };
