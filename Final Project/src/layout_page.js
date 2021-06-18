@@ -49,6 +49,8 @@ class LayoutPage extends React.Component {
               <UserOutlined />
               <Divider type="vertical" style={{backgroundColor:"white", top: 2}}/>
               {this.props.account}
+              <Divider type="vertical" style={{backgroundColor:"white", top: 2}}/>
+              {this.props.balance} wei
             </div>
           </Header>
         
