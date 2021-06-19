@@ -76,7 +76,8 @@ contract Mayor {
     // State attributes
     
     // Initialization variables
-    address payable public escrow;
+    address payable escrow;
+    address payable public winner;
 
     // Voting phase variables
     mapping(address => bytes32) envelopes;
@@ -92,7 +93,7 @@ contract Mayor {
     address[] candidates_addrs;
     address[] coalitions_addrs;
     address[] voters_addrs;
-    bool elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
+    bool public elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
 
     /// @notice The constructor only initializes internal variables
     /// @param _candidates (address) The address of the mayor candidate and optionally also the coaliton's address
@@ -197,7 +198,6 @@ contract Mayor {
     function mayor_or_sayonara() canCheckOutcome public {
         require(elections_over == false, "The elections are over");
         elections_over = true;
-        address payable winner;
         uint winner_soul;
 
         if(coalition_winner.addr != address(0x0) && coalition_winner.soul > totSouls/3){

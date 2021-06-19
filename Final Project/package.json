@@ -26,7 +26,8 @@
     "dev": "lite-server",
     "coverage": "truffle run coverage",
     "migrate": "truffle migrate --reset --network development",
-    "ganache": "ganache-cli -a 100"
+    "ganache": "ganache-cli -a 100",
+    "deploy": "mv ./build/contracts/Mayor.json ./src/Mayor.json"
   },
   "eslintConfig": {
     "extends": [

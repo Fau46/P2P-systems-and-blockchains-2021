@@ -1,44 +1,53 @@
 import React from 'react';
-import { Card, Row, Col, Space, Button, Form, InputNumber, message, Select } from 'antd';
+import { Card, Row, Col, Space, Button, Form, InputNumber, message, Select, Collapse, List} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 
 
-export default function Candidates(props) {
+export default function Coalitions(props) {
   const { Option } = Select;
-  var candidates = props.state.candidates;
+  const { Panel } = Collapse;
+  var coalitions = props.state.coalitions;
   var contract_instace = props.state.contract_instance
   var component = [];
 
   const success = () => {message.info('Envelope casted');}
 
   const onFinish = async (values) => {
-    console.log(values)
     var web3 = props.state.web3; 
-    var envelope = await contract_instace.compute_envelope(values.sigil, values.candidate, web3.utils.toWei(values.soul.toString(),values.unit));
+    var envelope = await contract_instace.compute_envelope(values.sigil, values.coalition, web3.utils.toWei(values.soul.toString(),values.unit));
     await contract_instace.cast_envelope(envelope, {from: props.state.account});
     success()
   };
 
-  if(candidates){
+  if(coalitions){
     const quorum = props.state.quorum;
     const envelopes_casted = props.state.envelopes_casted;
     
     var disabled = quorum > -1 && quorum == envelopes_casted ? true : false;
 
-    for(const candidate of candidates){
-
+    for(const coalition of coalitions){
       component.push(
         <Space style={{paddingLeft: "20px"}}>
           <Col className="gutter-row" span={6}>
-            <Card key="{candidate}" cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
-              <Card title={candidate} bordered={false}>
-                <Form key={candidate} onFinish={onFinish}>
-                  <Form.Item key={candidate} name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
+            <Card key={coalition.addr} cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
+              <Card title={coalition.addr} bordered={false}>
+                <Collapse style={{marginBottom: "25px"}}>
+                  <Panel header="Members">
+                    <List
+                      size="small"
+                      dataSource={coalition.members}
+                      renderItem={item => <List.Item style={{overflow: "hidden"}}>{item}</List.Item>}
+                    />
+                  </Panel>
+                </Collapse>
+                <Form onFinish={onFinish}>
+                  <Form.Item name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
                     <InputNumber disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "202px"}}/>
                   </Form.Item>
                   <Form.Item name="unit" label="Unit" rules={[{required: true, message: 'Please select the unit!',},]}>
                     <Select
+                      placeholder="Select a option and change input text above"
                       style={{marginLeft: "11px", width: "194px"}}
                       disabled={disabled}
                     >
@@ -50,7 +59,7 @@ export default function Candidates(props) {
                   <Form.Item name="sigil" label="Sigil" rules={[{required: true, message: 'Please input your sigil!',},]}>
                     <InputNumber disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "204px"}}/>
                   </Form.Item>
-                  <Form.Item name="candidate" initialValue={candidate} style={{height: "0px"}} />
+                  <Form.Item name="coalition" initialValue={coalition.addr} style={{height: "0px"}} />
                   <Form.Item>
                     <div style={{marginLeft : "100px", marginTop: "0px"}}><Button htmlType="submit" type="primary" shape="round" disabled={disabled} >VOTE</Button></div>
                   </Form.Item>

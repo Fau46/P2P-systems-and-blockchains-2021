@@ -6,8 +6,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Header, Content, Footer } = Layout;
 
 class LayoutPage extends React.Component {
     state = {
