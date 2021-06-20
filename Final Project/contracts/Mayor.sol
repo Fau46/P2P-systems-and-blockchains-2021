@@ -144,7 +144,7 @@ contract Mayor {
     /// @dev The soul is sent as crypto
     /// @dev Need to recompute the hash to validate the envelope previously casted
     function open_envelope(uint _sigil, address _candidate) canOpen public payable {       
-        require(envelopes[msg.sender] != 0x0, "The sender has not casted any votes");
+        require(envelopes[msg.sender] != 0x0, "The sender has not casted any vote");
         require(voters[msg.sender].opened == false, "Envelope already opened");
         
         bytes32 _casted_envelope = envelopes[msg.sender];

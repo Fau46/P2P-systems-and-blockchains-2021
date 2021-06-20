@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Row, Col, Space, Button, Form, InputNumber, message, Select } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Space, Button, Form, InputNumber, Select, notification } from 'antd';
+import { UserOutlined, TrophyTwoTone } from '@ant-design/icons';
 
 
 
@@ -10,32 +10,44 @@ export default function Candidates(props) {
   var contract_instace = props.state.contract_instance
   var component = [];
 
-  const success = () => {message.info('Envelope casted');}
+  const openNotification = placement => {
+    notification.success({
+      message: `Success`,
+      description:
+        'Envelope casted',
+      placement,
+      duration: 5
+    });
+  };  
 
   const onFinish = async (values) => {
-    console.log(values)
     var web3 = props.state.web3; 
     var envelope = await contract_instace.compute_envelope(values.sigil, values.candidate, web3.utils.toWei(values.soul.toString(),values.unit));
     await contract_instace.cast_envelope(envelope, {from: props.state.account});
-    success()
+    var forms = document.querySelectorAll(".ant-form")
+    forms.forEach(form => form.reset())
+    openNotification('topRight');
   };
+  
+  
 
   if(candidates){
     const quorum = props.state.quorum;
     const envelopes_casted = props.state.envelopes_casted;
     
     var disabled = quorum > -1 && quorum == envelopes_casted ? true : false;
-
+    
     for(const candidate of candidates){
+      var title = candidate == props.state.winner_addr ? <div><TrophyTwoTone twoToneColor="#52c41a" /> {candidate}</div> : candidate
 
       component.push(
         <Space style={{paddingLeft: "20px"}}>
           <Col className="gutter-row" span={6}>
             <Card key="{candidate}" cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
-              <Card title={candidate} bordered={false}>
+              <Card title={title} bordered={false}>
                 <Form key={candidate} onFinish={onFinish}>
-                  <Form.Item key={candidate} name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
-                    <InputNumber disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "202px"}}/>
+                  <Form.Item  key={candidate} name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
+                    <InputNumber allowClear disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "202px"}}/>
                   </Form.Item>
                   <Form.Item name="unit" label="Unit" rules={[{required: true, message: 'Please select the unit!',},]}>
                     <Select

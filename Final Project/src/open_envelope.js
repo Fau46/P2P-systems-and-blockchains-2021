@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Space, Button, Form, InputNumber, message, Select, Collapse, List } from 'antd';
+import { Card, Row, Col, Space, Button, Form, InputNumber, Select, Collapse, List, notification } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 
@@ -11,14 +11,23 @@ export default function OpenEnvelope(props) {
   var coalitions = props.state.coalitions;
   var contract_instace = props.state.contract_instance
   var component = [];
-  
-  const success = () => {message.info('Envelope opened');}
+
+  const openNotification = placement => {
+    notification.success({
+      message: `Success`,
+      description:
+        'Envelope opened',
+      placement,
+      duration: 5
+    });
+  };  
 
   const onFinish = async (values) => {
-    console.log(values, props.state.account)
     var web3 = props.state.web3; 
-    await contract_instace.open_envelope(values.sigil, values.candidate, {from: props.state.account, value: web3.utils.toWei(values.soul.toString(),values.unit)})
-    success()
+    await contract_instace.open_envelope(values.sigil, values.candidate, {from: props.state.account, value: web3.utils.toWei(values.soul.toString(),values.unit)});
+    var forms = document.querySelectorAll(".ant-form")
+    forms.forEach(form => form.reset())
+    openNotification('topRight');
 
   };
 
@@ -35,13 +44,12 @@ export default function OpenEnvelope(props) {
           <Col className="gutter-row" span={6}>
             <Card key="{candidate}" cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
               <Card title={candidate} bordered={false}>
-                <Form onFinish={onFinish}>
+                <Form  onFinish={onFinish}>
                   <Form.Item name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
                     <InputNumber disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "202px"}}/>
                   </Form.Item>
                   <Form.Item name="unit" label="Unit" rules={[{required: true, message: 'Please select the unit!',},]}>
                     <Select
-                      placeholder="Select a option and change input text above"
                       style={{marginLeft: "11px", width: "194px"}}
                       disabled={disabled}
                     >
@@ -80,7 +88,7 @@ export default function OpenEnvelope(props) {
                     />
                   </Panel>
                 </Collapse>
-                <Form onFinish={onFinish}>
+                <Form id="form" onFinish={onFinish}>
                   <Form.Item name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
                     <InputNumber disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "202px"}}/>
                   </Form.Item>
@@ -97,7 +105,7 @@ export default function OpenEnvelope(props) {
                   <Form.Item name="sigil" label="Sigil" rules={[{required: true, message: 'Please input your sigil!',},]}>
                     <InputNumber disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "204px"}}/>
                   </Form.Item>
-                  <Form.Item name="coalition" initialValue={coalition.addr} style={{height: "0px"}} />
+                  <Form.Item name="candidate" initialValue={coalition.addr} style={{height: "0px"}} />
                   <Form.Item>
                     <div style={{marginLeft : "63px"}}><Button htmlType="submit" type="primary" shape="round" disabled={disabled} >OPEN ENVELOPE</Button></div>
                   </Form.Item>

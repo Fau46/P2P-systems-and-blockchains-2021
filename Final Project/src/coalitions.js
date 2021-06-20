@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Row, Col, Space, Button, Form, InputNumber, message, Select, Collapse, List} from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Space, Button, Form, InputNumber, notification, Select, Collapse, List} from 'antd';
+import { UserOutlined, TrophyTwoTone } from '@ant-design/icons';
 
 
 
@@ -11,13 +11,23 @@ export default function Coalitions(props) {
   var contract_instace = props.state.contract_instance
   var component = [];
 
-  const success = () => {message.info('Envelope casted');}
+  const openNotification = placement => {
+    notification.success({
+      message: `Success`,
+      description:
+        'Envelope casted',
+      placement,
+      duration: 5
+    });
+  };  
 
   const onFinish = async (values) => {
     var web3 = props.state.web3; 
     var envelope = await contract_instace.compute_envelope(values.sigil, values.coalition, web3.utils.toWei(values.soul.toString(),values.unit));
     await contract_instace.cast_envelope(envelope, {from: props.state.account});
-    success()
+    var forms = document.querySelectorAll(".ant-form")
+    forms.forEach(form => form.reset())
+    openNotification('topRight');
   };
 
   if(coalitions){
@@ -27,11 +37,14 @@ export default function Coalitions(props) {
     var disabled = quorum > -1 && quorum == envelopes_casted ? true : false;
 
     for(const coalition of coalitions){
+      var title = coalition.addr == props.state.winner_addr ? <div><TrophyTwoTone twoToneColor="#52c41a" /> {coalition.addr}</div> : coalition.addr
+
+
       component.push(
         <Space style={{paddingLeft: "20px"}}>
           <Col className="gutter-row" span={6}>
             <Card key={coalition.addr} cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
-              <Card title={coalition.addr} bordered={false}>
+              <Card title={title} bordered={false}>
                 <Collapse style={{marginBottom: "25px"}}>
                   <Panel header="Members">
                     <List
@@ -47,7 +60,6 @@ export default function Coalitions(props) {
                   </Form.Item>
                   <Form.Item name="unit" label="Unit" rules={[{required: true, message: 'Please select the unit!',},]}>
                     <Select
-                      placeholder="Select a option and change input text above"
                       style={{marginLeft: "11px", width: "194px"}}
                       disabled={disabled}
                     >

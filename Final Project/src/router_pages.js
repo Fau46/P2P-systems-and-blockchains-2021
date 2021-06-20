@@ -9,6 +9,7 @@ import Coalitions from "./coalitions"
 import OpenEnvelope from "./open_envelope"
 import ElectCandidate from "./elect_candidate"
 import { Tabs } from 'antd';
+import { render } from '@testing-library/react';
 
 const { TabPane } = Tabs;
 
@@ -42,7 +43,7 @@ export default class RouterPages extends React.Component{
       envelopes_opened: -1,
       winner_addr: '-',
       mayor_or_sayonara_event: '-',
-      called_mayor_or_sayonara: this.called_mayor_or_sayonara.bind(this)
+      called_mayor_or_sayonara: this.called_mayor_or_sayonara.bind(this),
     }
   }
 
@@ -114,9 +115,13 @@ export default class RouterPages extends React.Component{
             <TabPane tab="Coalitions" key="2">
               <Coalitions state={this.state}/>
             </TabPane>
-            <TabPane tab="Open Envelope" key="3">
-              <OpenEnvelope state={this.state}/>
-            </TabPane>
+            {
+              (this.state.winner_addr === '-' && this.state.quorum == this.state.envelopes_casted && this.state.quorum != this.state.envelopes_opened) ?
+                <TabPane tab="Open Envelope" key="3">
+                  <OpenEnvelope state={this.state}/>
+                </TabPane>
+              : null
+            }
             {
               (this.state.quorum>0 && this.state.quorum == this.state.envelopes_opened) ?
                 (

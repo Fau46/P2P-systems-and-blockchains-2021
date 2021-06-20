@@ -1,12 +1,21 @@
 import React from 'react';
-import { Button, Form, Descriptions, Card, Row, Col } from 'antd';
+import { Button, Form, Descriptions, Card, Row, Col, notification } from 'antd';
 
 export default function ElectCandidate(props){
 
   const mayorOrSayonara = async () =>{
     await props.contract_instance.mayor_or_sayonara({from: props.account})
     props.called_mayor_or_sayonara()
+    openNotification('topRight')
   }
+
+  const openNotification = placement => {
+    notification.info({
+      message: `Elections are over`,
+      placement,
+      duration: 5
+    });
+  };
 
   return(
     <Row justify="space-around" align="middle">
@@ -21,7 +30,7 @@ export default function ElectCandidate(props){
             </Form.Item>
             <Form.Item>
             <Button  htmlType="submit" type="primary" shape="round" disabled={props.elections_over} style={{marginLeft: "140px"}}>
-              Elect the new candiate
+              Elect the new mayor
             </Button>
             </Form.Item>
           </Form>
