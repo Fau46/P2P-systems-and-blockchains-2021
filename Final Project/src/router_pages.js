@@ -2,14 +2,12 @@
 import React from 'react';
 import Web3 from 'web3';
 import TruffleContract from '@truffle/contract' 
-import Mayor from "./Mayor.json"
 import LayoutPage from './layout_page';
 import Candidates from "./candidates";
 import Coalitions from "./coalitions"
 import OpenEnvelope from "./open_envelope"
 import ElectCandidate from "./elect_candidate"
 import { Tabs } from 'antd';
-import { render } from '@testing-library/react';
 
 const { TabPane } = Tabs;
 
@@ -29,12 +27,9 @@ export default class RouterPages extends React.Component{
         console.log(error)
       }
     }
-    this.contract = TruffleContract(Mayor);
-    this.contract.setProvider(this.web3.currentProvider);
 
     this.state = {
       web3: this.web3,
-      contract: this.contract,
       account: '',
       contract_instance: null,
       balance: 0,
@@ -70,8 +65,12 @@ export default class RouterPages extends React.Component{
   }
 
   async componentDidMount(){
-    const account = (await this.web3.eth.getAccounts())[0];
-    const contract_instance = await this.state.contract.deployed();
+    var mayor = await fetch("/contracts/Mayor.json");
+    const contract = TruffleContract(await mayor.json());
+    contract.setProvider(this.state.web3.currentProvider);
+
+    const account = (await this.state.web3.eth.getAccounts())[0];    
+    const contract_instance = await contract.deployed();
     const candidates = await contract_instance.get_candidate_addrs.call();
     const coalitions_raw = await contract_instance.get_coalitions.call()
     const balance = await this.web3.eth.getBalance(account);
@@ -105,7 +104,7 @@ export default class RouterPages extends React.Component{
     clearInterval(this.interval_update_voting_condition)
   }
 
-  render(){
+  render(){    
     return(
         <LayoutPage account={this.state.account} balance={this.state.balance} quorum={this.state.quorum} envelopes_casted={this.state.envelopes_casted} envelopes_opened={this.state.envelopes_opened} disbaled_button={this.state.quorum!=-1 && this.state.quorum == this.state.envelopes_casted}>
           <Tabs defaultActiveKey="1" centered>

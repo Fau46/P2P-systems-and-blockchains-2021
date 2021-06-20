@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">92.11% </span>
+        <span class="strong">90.79% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>70/76</span>
+        <span class='fraction'>69/76</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">78.26% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>36/46</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">80% </span>
+        <span class="strong">72.73% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>8/10</span>
+        <span class='fraction'>8/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">92.31% </span>
+        <span class="strong">91.03% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>72/78</span>
+        <span class='fraction'>71/78</span>
       </div>
     </div>
   </div>
@@ -297,7 +297,11 @@
 252
 253
 254
-255</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+255
+256
+257
+258
+259</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -398,29 +402,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">23×</span>
-<span class="cline-any cline-yes">23×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23×</span>
-<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">35×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19×</span>
-<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">33×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19×</span>
-<span class="cline-any cline-yes">16×</span>
-<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">31×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16×</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">18×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -494,7 +499,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">4×</span>
@@ -547,6 +551,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -629,23 +637,24 @@ contract Mayor {
     // State attributes
     
     // Initialization variables
-    address payable public escrow;
+    address payable escrow;
+    address payable public winner;
 &nbsp;
     // Voting phase variables
     mapping(address =&gt; bytes32) envelopes;
 &nbsp;
-    Conditions voting_condition;
+    Conditions public voting_condition;
     Coalition_winner coalition_winner;
     Candidate_winner candidate_winner;
 &nbsp;
-    uint public totSouls;
+    uint totSouls;
     mapping (address =&gt; Candidate) candidates;
     mapping (address =&gt; Coalition) coalitions;
     mapping(address =&gt; Voter) voters;
     address[] candidates_addrs;
     address[] coalitions_addrs;
     address[] voters_addrs;
-    bool elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
+    bool public elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
 &nbsp;
     /// @notice The constructor only initializes internal variables
     /// @param _candidates (address) The address of the mayor candidate and optionally also the coaliton's address
@@ -696,7 +705,7 @@ contract Mayor {
     /// @dev The soul is sent as crypto
     /// @dev Need to recompute the hash to validate the envelope previously casted
     function open_envelope(uint _sigil, address _candidate) canOpen public payable {       
-        <span class="missing-if-branch" title="else path not taken" >E</span>require(envelopes[msg.sender] != 0x0, "The sender has not casted any votes");
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(envelopes[msg.sender] != 0x0, "The sender has not casted any vote");
         <span class="missing-if-branch" title="else path not taken" >E</span>require(voters[msg.sender].opened == false, "Envelope already opened");
         
         bytes32 _casted_envelope = envelopes[msg.sender];
@@ -750,7 +759,6 @@ contract Mayor {
     function mayor_or_sayonara() canCheckOutcome public {
         <span class="missing-if-branch" title="else path not taken" >E</span>require(elections_over == false, "The elections are over");
         elections_over = true;
-        address payable winner;
         uint winner_soul;
 &nbsp;
         if(coalition_winner.addr != address(0x0) &amp;&amp; coalition_winner.soul &gt; totSouls/3){
@@ -805,13 +813,17 @@ contract Mayor {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        return coalitions_array;</span>
     }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function get_voting_condition() external view returns(uint32,uint32,uint32){</span>
+<span class="cstat-no" title="statement not covered" >        return (voting_condition.quorum,voting_condition.envelopes_casted,voting_condition.envelopes_opened);</span>
+    }
 }</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jun 17 2021 12:57:40 GMT+0200 (Ora legale dell’Europa centrale)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jun 20 2021 17:38:26 GMT+0200 (Ora legale dell’Europa centrale)
 </div>
 </div>
 <script src="../prettify.js"></script>

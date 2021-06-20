@@ -27,7 +27,7 @@
     "coverage": "truffle run coverage",
     "migrate": "truffle migrate --reset --network development",
     "ganache": "ganache-cli -a 100",
-    "deploy": "mv ./build/contracts/Mayor.json ./src/Mayor.json"
+    "deploy": "mv ./build/contracts/Mayor.json ./public/Mayor.json"
   },
   "eslintConfig": {
     "extends": [
