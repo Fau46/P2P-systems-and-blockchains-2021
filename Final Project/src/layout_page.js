@@ -1,26 +1,13 @@
 import React from 'react';
-import { Layout, Menu, Divider } from 'antd';
+import { Layout, Divider } from 'antd';
 import {
-  FileOutlined,
-  TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 
 class LayoutPage extends React.Component {
-    state = {
-    collapsed: false,
-  };
-
-  onCollapse = collapsed => {
-    console.log(collapsed);
-    this.setState({ collapsed });
-  };
-  
   render() {
-    const { collapsed } = this.state;
-
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Layout className="site-layout">

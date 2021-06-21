@@ -96,7 +96,7 @@ export default class RouterPages extends React.Component{
     this.interval_update_voting_condition = setInterval(() => this.updateVotingCondition(), 1000);
     
     this.setState({account: account, contract_instance: contract_instance, candidates: candidates, balance: balance, coalitions: coalitions})
-    if(await contract_instance.elections_over() == true) this.called_mayor_or_sayonara();
+    if(await contract_instance.elections_over() === true) this.called_mayor_or_sayonara();
   }
 
   componentWillUnmount() {
@@ -106,7 +106,7 @@ export default class RouterPages extends React.Component{
 
   render(){    
     return(
-        <LayoutPage account={this.state.account} balance={this.state.balance} quorum={this.state.quorum} envelopes_casted={this.state.envelopes_casted} envelopes_opened={this.state.envelopes_opened} disbaled_button={this.state.quorum!=-1 && this.state.quorum == this.state.envelopes_casted}>
+        <LayoutPage account={this.state.account} balance={this.state.balance} quorum={this.state.quorum} envelopes_casted={this.state.envelopes_casted} envelopes_opened={this.state.envelopes_opened} disbaled_button={this.state.quorum!==-1 && this.state.quorum === this.state.envelopes_casted}>
           <Tabs defaultActiveKey="1" centered>
             <TabPane tab="Candidates" key="1">
               <Candidates state={this.state}/>
@@ -115,14 +115,14 @@ export default class RouterPages extends React.Component{
               <Coalitions state={this.state}/>
             </TabPane>
             {
-              (this.state.winner_addr === '-' && this.state.quorum == this.state.envelopes_casted && this.state.quorum != this.state.envelopes_opened) ?
+              (this.state.winner_addr === '-' && this.state.quorum === this.state.envelopes_casted && this.state.quorum !== this.state.envelopes_opened) ?
                 <TabPane tab="Open Envelope" key="3">
                   <OpenEnvelope state={this.state}/>
                 </TabPane>
               : null
             }
             {
-              (this.state.quorum>0 && this.state.quorum == this.state.envelopes_opened) ?
+              (this.state.quorum>0 && this.state.quorum === this.state.envelopes_opened) ?
                 (
                   <TabPane tab="Mayor or Sayonara" key="4">
                       <ElectCandidate 

@@ -34,10 +34,10 @@ export default function Coalitions(props) {
     const quorum = props.state.quorum;
     const envelopes_casted = props.state.envelopes_casted;
     
-    var disabled = quorum > -1 && quorum == envelopes_casted ? true : false;
+    var disabled = quorum > -1 && quorum === envelopes_casted ? true : false;
 
     for(const coalition of coalitions){
-      var title = coalition.addr == props.state.winner_addr ? <div><TrophyTwoTone twoToneColor="#52c41a" /> {coalition.addr}</div> : coalition.addr
+      var title = coalition.addr === props.state.winner_addr ? <div><TrophyTwoTone twoToneColor="#52c41a" /> {coalition.addr}</div> : coalition.addr
 
 
       component.push(

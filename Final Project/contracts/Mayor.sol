@@ -96,7 +96,7 @@ contract Mayor {
     bool public elections_over; //Flag for avoid reentrancy in mayor_or_sayonara
 
     /// @notice The constructor only initializes internal variables
-    /// @param _candidates (address) The address of the mayor candidate and optionally also the coaliton's address
+    /// @param _candidates (array) The address of the mayor candidate and optionally also the coaliton's address
     /// @param _escrow (address) The address of the escrow account
     /// @param _quorum (address) The number of voters required to finalize the confirmation
     constructor(Register_candidate[] memory _candidates, address payable _escrow, uint32 _quorum) public {

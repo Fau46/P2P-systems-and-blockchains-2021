@@ -35,10 +35,10 @@ export default function Candidates(props) {
     const quorum = props.state.quorum;
     const envelopes_casted = props.state.envelopes_casted;
     
-    var disabled = quorum > -1 && quorum == envelopes_casted ? true : false;
+    var disabled = quorum > -1 && quorum === envelopes_casted ? true : false;
     
     for(const candidate of candidates){
-      var title = candidate == props.state.winner_addr ? <div><TrophyTwoTone twoToneColor="#52c41a" /> {candidate}</div> : candidate
+      var title = candidate === props.state.winner_addr ? <div><TrophyTwoTone twoToneColor="#52c41a" /> {candidate}</div> : candidate
 
       component.push(
         <Space style={{paddingLeft: "20px"}}>

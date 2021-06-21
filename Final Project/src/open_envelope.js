@@ -36,7 +36,7 @@ export default function OpenEnvelope(props) {
     const envelopes_casted = props.state.envelopes_casted;
     const envelopes_opened = props.state.envelopes_opened
     
-    var disabled = quorum != -1 && quorum == envelopes_casted && quorum != envelopes_opened ? false : true;
+    var disabled = quorum !== -1 && quorum === envelopes_casted && quorum !== envelopes_opened ? false : true;
 
     for(const candidate of candidates){
       component.push(
@@ -92,9 +92,9 @@ export default function OpenEnvelope(props) {
                   <Form.Item name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
                     <InputNumber disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "202px"}}/>
                   </Form.Item>
-                  <Form.Item name="unit" label="Unit">
+                  <Form.Item name="unit" label="Unit" rules={[{required: true, message: 'Please select the unit!',},]}>
                     <Select
-                      style={{marginLeft: "11px", width: "204px"}}
+                      style={{marginLeft: "11px", width: "190px"}}
                       disabled={disabled}
                     >
                       <Option value="wei">WEI</Option>

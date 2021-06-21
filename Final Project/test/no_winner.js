@@ -14,19 +14,19 @@ contract("Testing Mayor (no winner)", accounts =>{
   const voter2 = accounts[9];
   const voter3 = accounts[10];
 
-  console.log("candidate1: "+candidate1)
-  console.log("candidate2: "+candidate2)
-  console.log("candidate3: "+candidate3)
-  console.log("candidate4: "+candidate4)
-  console.log()
-  console.log("coalition1: "+coalition1)
-  console.log("coalition2: "+coalition2)
-  console.log() 
-  console.log("escrow: "+escrow)
-  console.log()
-  console.log("voter1: "+voter1)
-  console.log("voter2: "+voter2)
-  console.log("voter3: "+voter3)
+  // console.log("candidate1: "+candidate1)
+  // console.log("candidate2: "+candidate2)
+  // console.log("candidate3: "+candidate3)
+  // console.log("candidate4: "+candidate4)
+  // console.log()
+  // console.log("coalition1: "+coalition1)
+  // console.log("coalition2: "+coalition2)
+  // console.log() 
+  // console.log("escrow: "+escrow)
+  // console.log()
+  // console.log("voter1: "+voter1)
+  // console.log("voter2: "+voter2)
+  // console.log("voter3: "+voter3)
 
 
   const no_coalition = "0x0000000000000000000000000000000000000000";
