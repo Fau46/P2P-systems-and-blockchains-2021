@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Space, Button, Form, InputNumber, Select, notification } from 'antd';
+import { Card, Row, Col, Space, Button, Form, InputNumber, Select, notification, Tooltip } from 'antd';
 import { UserOutlined, TrophyTwoTone } from '@ant-design/icons';
 
 
@@ -43,8 +43,8 @@ export default function Candidates(props) {
       component.push(
         <Space style={{paddingLeft: "20px"}}>
           <Col className="gutter-row" span={6}>
-            <Card key="{candidate}" cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
-              <Card title={title} bordered={false}>
+            <Card key={candidate} cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
+              <Card title={<Tooltip placement="topLeft" title={candidate}>{title}</Tooltip>} bordered={false}>
                 <Form key={candidate} onFinish={onFinish}>
                   <Form.Item  key={candidate} name="soul" label="Soul" rules={[{required: true, message: 'Please input your soul!',},]}>
                     <InputNumber allowClear disabled={disabled} min={0} max={Math.pow(2,256)-1} style={{width: "202px"}}/>

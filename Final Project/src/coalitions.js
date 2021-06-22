@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Space, Button, Form, InputNumber, notification, Select, Collapse, List} from 'antd';
+import { Card, Row, Col, Space, Button, Form, InputNumber, notification, Select, Collapse, List, Tooltip} from 'antd';
 import { UserOutlined, TrophyTwoTone } from '@ant-design/icons';
 
 
@@ -44,13 +44,19 @@ export default function Coalitions(props) {
         <Space style={{paddingLeft: "20px"}}>
           <Col className="gutter-row" span={6}>
             <Card key={coalition.addr} cover={<UserOutlined style={{ fontSize: '160px', padding: "10px"}}/>} bordered={false} style={{ width: 350 }}>
-              <Card title={title} bordered={false}>
+              <Card title={<Tooltip placement="topLeft" title={coalition.addr}>{title}</Tooltip>} bordered={false}>
                 <Collapse style={{marginBottom: "25px"}}>
                   <Panel header="Members">
                     <List
                       size="small"
                       dataSource={coalition.members}
-                      renderItem={item => <List.Item style={{overflow: "hidden"}}>{item}</List.Item>}
+                      renderItem={
+                        item => 
+                          <List.Item>
+                            <Tooltip placement="top" title={item}>
+                              <div style={{overflow: "hidden", textOverflow: "ellipsis"}}>{item}</div>
+                            </Tooltip>  
+                          </List.Item>}
                     />
                   </Panel>
                 </Collapse>

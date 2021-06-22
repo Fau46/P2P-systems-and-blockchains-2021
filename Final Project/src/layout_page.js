@@ -11,12 +11,10 @@ class LayoutPage extends React.Component {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0}} >
+          <Header className="site-layout-background" style={{ padding: 0, backgroundColor:'#204373'}} >
             <div className="voting-condition" style={{color: "white"}}>
             </div>
-            <div className="account" style={{
-              color: "white", marginRight: "30px", lineHeight: "normal", display: "inline-flex", position: "relative", float: "right", top: "20px"
-            }}>
+            <div className="account">
               Quorum: {this.props.quorum}
               <Divider type="vertical" style={{backgroundColor:"white", top: 2}}/>
               Env. Casted: {this.props.envelopes_casted}
@@ -27,13 +25,14 @@ class LayoutPage extends React.Component {
               <Divider type="vertical" style={{backgroundColor:"white", top: 2}}/>
               WEI {this.props.balance} 
             </div>
+            <div className="title" style={{}}>VALADILÈNE ELECTIONS</div>
           </Header>
         
           <Content style={{ margin: '0 16px' }}>
             {this.props.children}
           </Content>
         
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+          <Footer style={{ textAlign: 'center' }}>Peer to Peer Systems and Blockchains 2020/21 <br/> Created by Fausto F. Frasca</Footer>
         </Layout>
       </Layout>
     );

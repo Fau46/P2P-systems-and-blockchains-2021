@@ -33,7 +33,7 @@ module.exports = async function (deployer, newtwork, accounts) {
     }
   ]
 
-  const instance = await deployer.deploy(Mayor, candidate_list, escrow, 1);
+  const instance = await deployer.deploy(Mayor, candidate_list, escrow, 5);
   // const ce1 = await instance.compute_envelope(1,candidate1, 1, {from: candidate1});
   // await instance.cast_envelope(ce1, {from: candidate1});
   // const ce2 = await instance.compute_envelope(1,candidate2, 1, {from: candidate2});

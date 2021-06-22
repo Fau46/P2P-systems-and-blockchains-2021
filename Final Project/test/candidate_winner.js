@@ -13,6 +13,8 @@ contract("Testing Mayor (candidate winner)", accounts =>{
   const voter1 = accounts[8];
   const voter2 = accounts[9];
   const voter3 = accounts[10];
+  const voter4 = accounts[11];
+  const voter5 = accounts[12];
 
   // console.log("candidate1: "+candidate1)
   // console.log("candidate2: "+candidate2)
@@ -53,30 +55,38 @@ contract("Testing Mayor (candidate winner)", accounts =>{
   var ce1;
   var ce2;
   var ce3;
-  var ce4; 
+  var ce4;
+  var ce5;
+  var ce6; 
 
   it("Should test constructor", async function(){
-    instance = await Mayor.new(candidate_list, escrow, 3)
+    instance = await Mayor.new(candidate_list, escrow, 5)
   })
 
   it("Should test compute_envelope", async function(){
     ce1 = await instance.compute_envelope(1, coalition1, 1, {from: voter1});
     ce2 = await instance.compute_envelope(2, coalition2, 1, {from: voter2});
     ce3 = await instance.compute_envelope(3, candidate4, 1, {from: voter3});
-    ce4 = await instance.compute_envelope(1, coalition2, 1, {from: voter1});
+    ce4 = await instance.compute_envelope(4, candidate1, 1, {from: voter4});
+    ce5 = await instance.compute_envelope(5, candidate4, 1, {from: voter5});
+    ce6 = await instance.compute_envelope(1, coalition2, 1, {from: voter1});
   })
   
   it("Should test cast_envelope", async function(){
-    await instance.cast_envelope(ce4, {from: voter1}) 
+    await instance.cast_envelope(ce6, {from: voter1}) 
     await instance.cast_envelope(ce1, {from: voter1}) //test the change of the vote
     await instance.cast_envelope(ce2, {from: voter2})
     await instance.cast_envelope(ce3, {from: voter3})
+    await instance.cast_envelope(ce4, {from: voter4})
+    await instance.cast_envelope(ce5, {from: voter5})
   })
 
   it("Should test open_envelope", async function(){
     await instance.open_envelope(1, coalition1, {from: voter1, value: 1})
     await instance.open_envelope(2, coalition2, {from: voter2, value: 1})
     await instance.open_envelope(3, candidate4, {from: voter3, value: 1})
+    await instance.open_envelope(4, candidate1, {from: voter4, value: 1})
+    await instance.open_envelope(5, candidate4, {from: voter5, value: 1})
   })
 
   it("Should test mayor_or_sayonara", async function(){

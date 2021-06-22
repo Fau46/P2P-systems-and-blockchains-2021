@@ -26,7 +26,7 @@
     "dev": "lite-server",
     "coverage": "truffle run coverage",
     "migrate": "truffle migrate --reset --network development",
-    "ganache": "ganache-cli -a 100",
+    "ganache": "ganache-cli -a 100 -m 'dutch ivory morning blade episode boy quote cat utility spare chase skate'",
     "deploy": "cp ./build/contracts/Mayor.json ./public/contracts/Mayor.json"
   },
   "eslintConfig": {
