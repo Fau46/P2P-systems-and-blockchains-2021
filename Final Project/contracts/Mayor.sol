@@ -3,7 +3,6 @@ pragma solidity 0.8.1;
 contract Mayor {
     
     // Structs, events, and modifiers
-    
     struct Register_candidate{
         address candidate_address;
         address coalition_address;
@@ -200,11 +199,11 @@ contract Mayor {
         elections_over = true;
         uint winner_soul;
 
-        if(coalition_winner.addr != address(0x0) && coalition_winner.soul > totSouls/3){
+        if(coalition_winner.addr != address(0x0) && coalition_winner.soul > totSouls/3){ //if there is a winnig coalition that have received more than 1/3 of the soul
             winner = payable(coalition_winner.addr);
             winner_soul = coalition_winner.soul;
         }
-        else if(candidate_winner.addr != address(0x0)){
+        else if(candidate_winner.addr != address(0x0)){ //else if there is a winning candidate
             winner = payable(candidate_winner.addr);
             winner_soul = candidate_winner.soul;
         }
@@ -237,11 +236,12 @@ contract Mayor {
         return keccak256(abi.encode(_sigil, _candidate, _soul));
     }
 
-
+    /// @notice Return a list with the addresses of the individual candidates
     function get_candidate_addrs() external view returns (address[] memory){
         return candidates_addrs;
     }
 
+    /// @notice Return a list with all the addresses of the coalitions. For each coalition is returned also the list with all the memebers.
     function get_coalitions() external view returns (Return_coalition[] memory){
         Return_coalition[] memory coalitions_array = new Return_coalition[](coalitions_addrs.length);
 
@@ -249,10 +249,10 @@ contract Mayor {
             address coalition = coalitions_addrs[i];
             coalitions_array[i] = Return_coalition({members: coalitions[coalition].members, addr: coalition});
         }
-
         return coalitions_array;
     }
 
+    /// @notice Return the triple (quorum, env. casted, env. opened)
     function get_voting_condition() external view returns(uint32,uint32,uint32){
         return (voting_condition.quorum,voting_condition.envelopes_casted,voting_condition.envelopes_opened);
     }
